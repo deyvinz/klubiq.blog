@@ -61,7 +61,8 @@ export async function fetchStrapiData<T>(endpoint: string, params: StrapiQueryPa
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${STRAPI_API_TOKEN}`,
         },
-        cache: 'no-store', // Disable caching to ensure fresh data
+        next: { revalidate: 60 },
+        // cache: 'no-store', // Disable caching to ensure fresh data
       })
 
       console.log('Response details:', {
