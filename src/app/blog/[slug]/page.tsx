@@ -1,20 +1,23 @@
 import { Metadata } from 'next'
+import { notFound } from 'next/navigation'
 import { fetchStrapiData } from '@/lib/strapi'
 import { StrapiPost } from '@/types/strapi'
 import BlogPost from '@/components/BlogPost'
-import { notFound } from 'next/navigation'
+
+interface PageProps {
+  params: Promise<{ slug: string }>
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>
+}
 
 export const revalidate = 3600 // Revalidate every hour
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string }
-}): Promise<Metadata> {
+export async function generateMetadata(
+  { params }: PageProps
+): Promise<Metadata> {
   // First find the post by slug
   const { data: posts } = await fetchStrapiData<{ data: StrapiPost[] }>('/posts', {
     filters: {
-      slug: params.slug,
+      slug: (await params).slug,
     },
     populate: ['cover', 'category', 'author', 'tags'],
   })
@@ -41,15 +44,11 @@ export async function generateMetadata({
   }
 }
 
-export default async function BlogPostPage({
-  params,
-}: {
-  params: { slug: string }
-}) {
+export default async function Page(props: PageProps) {
   // First find the post by slug
   const { data: posts } = await fetchStrapiData<{ data: StrapiPost[] }>('/posts', {
     filters: {
-      slug: params.slug,
+      slug: (await props.params).slug,
     },
     populate: ['cover', 'category', 'author', 'tags'],
   })
@@ -60,5 +59,5 @@ export default async function BlogPostPage({
     notFound()
   }
 
-  return <BlogPost slug={params.slug} />
+  return <BlogPost post={post} />
 } 

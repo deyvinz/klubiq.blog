@@ -5,13 +5,13 @@ import SearchForm from '@/components/SearchForm'
 import SearchResults from '@/components/SearchResults'
 
 interface SearchPageProps {
-  searchParams: { q?: string }
+  searchParams: Promise<{ q?: string }>
 }
 
 export async function generateMetadata({
   searchParams,
 }: SearchPageProps): Promise<Metadata> {
-  const query = searchParams.q || ''
+  const query = (await searchParams).q || ''
   return {
     title: query ? `Search results for "${query}" - KlubIQ Blog` : 'Search - KlubIQ Blog',
     description: query
@@ -21,7 +21,7 @@ export async function generateMetadata({
 }
 
 export default async function SearchPage({ searchParams }: SearchPageProps) {
-  const query = searchParams.q || ''
+  const query = (await searchParams).q || ''
   let posts: StrapiPost[] = []
   let error = null
 

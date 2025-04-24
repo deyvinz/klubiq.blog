@@ -1,18 +1,16 @@
 import CategoryPostsContent from '@/components/CategoryPostsContent'
 
 interface CategoryPageProps {
-  params: {
-    slug: string
-  }
+  params: Promise<{ slug: string }>
 }
 
 export async function generateMetadata({ params }: CategoryPageProps) {
   return {
-    title: `${params.slug} - KlubIQ Blog`,
-    description: `Browse all posts in the ${params.slug} category`,
+    title: `${(await params).slug} - KlubIQ Blog`,
+    description: `Browse all posts in the ${(await params).slug} category`,
   }
 }
 
-export default function CategoryPage({ params }: CategoryPageProps) {
-  return <CategoryPostsContent categorySlug={params.slug} />
+export default async function CategoryPage({ params }: CategoryPageProps) {
+  return <CategoryPostsContent categorySlug={(await params).slug} />
 } 

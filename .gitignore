@@ -50,3 +50,8 @@ Thumbs.db
 .env.local
 .cursor/
 *.markdown
+docs/deployment/strapi-deployment.md
+docs/deployment/strapi-deployment.mdx
+docs/deployment/frontend-deployment.md
+docs/deployment/frontend-deployment.mdx
+.env.*
