@@ -11,8 +11,10 @@ interface BlogPostProps {
 
 export default function BlogPost({ post }: BlogPostProps) {
   const getImageUrl = (url: string) => {
-    if (url.startsWith('http')) return url
-    return `${process.env.NEXT_PUBLIC_STRAPI_API_URL}${url}`
+    // Decode the URL
+    const decodedUrl = decodeURIComponent(url)
+    // Remove query parameters if they exist
+    return decodedUrl.split('?')[0];
   }
 
   return (
