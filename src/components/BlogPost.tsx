@@ -10,11 +10,21 @@ interface BlogPostProps {
 }
 
 export default function BlogPost({ post }: BlogPostProps) {
+  const STRAPI_API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://localhost:1337'
   const getImageUrl = (url: string) => {
-    // Decode the URL
-    const decodedUrl = decodeURIComponent(url)
-    // Remove query parameters if they exist
-    return decodedUrl.split('?')[0];
+    // // Decode the URL
+    // const decodedUrl = decodeURIComponent(url)
+    // // Remove query parameters if they exist
+    // return decodedUrl.split('?')[0];
+    if (!url) {
+      return ''
+    }
+     // Decode the URL
+     const decodedUrl = decodeURIComponent(url)
+     if (decodedUrl.startsWith('http')){
+      return decodedUrl.split('?')[0];
+     }
+     return `${STRAPI_API_URL}${decodedUrl.split('?')[0]}`
   }
 
   return (

@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { StrapiPost } from '@/types/strapi'
+import { getStrapiMedia } from '@/lib/strapi'
 
 interface BlogPostCardProps {
   post: StrapiPost
@@ -15,7 +16,7 @@ export default function BlogPostCard({ post }: BlogPostCardProps) {
         <div className="relative h-48">
           {post.cover && post.cover.url && (
             <Image
-              src={post.cover.url}
+              src={getStrapiMedia(post.cover.url)}
               alt={post.cover.alternativeText || post.title}
               fill
               className="object-cover"

@@ -109,9 +109,15 @@ export async function fetchStrapiData<T>(endpoint: string, params: StrapiQueryPa
 
 // Helper function to get image URL from Strapi
 export function getStrapiMedia(url: string | null): string {
-  if (!url) return ''
-  if (url.startsWith('http')) return url
-  return `${STRAPI_API_URL}${url}`
+  if (!url) {
+    return ''
+  }
+   // Decode the URL
+   const decodedUrl = decodeURIComponent(url)
+   if (decodedUrl.startsWith('http')){
+    return decodedUrl.split('?')[0];
+   }
+   return `${STRAPI_API_URL}${decodedUrl.split('?')[0]}`
 }
 
 // Helper function to format Strapi date
