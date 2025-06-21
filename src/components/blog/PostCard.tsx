@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import { formatDate } from '@/lib/utils'
+import { getStrapiMedia } from '@/lib/strapi'
 
 interface PostCardProps {
   title: string
@@ -29,7 +30,7 @@ export default function PostCard({
       <Link href={`/posts/${slug}`} className="block">
         <div className="relative aspect-video">
           <Image
-            src={imageUrl}
+            src={getStrapiMedia(imageUrl)}
             alt={title}
             fill
             className="object-cover"

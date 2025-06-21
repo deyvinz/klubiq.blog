@@ -4,6 +4,7 @@ import { useStrapi } from '@/hooks/useStrapi'
 import { StrapiPost } from '@/types/strapi'
 import Link from 'next/link'
 import Image from 'next/image'
+import { getStrapiMedia } from '@/lib/strapi'
 
 interface CategoryPostsContentProps {
   categorySlug: string
@@ -65,7 +66,7 @@ export default function CategoryPostsContent({ categorySlug }: CategoryPostsCont
               <div className="relative h-48 mb-4 overflow-hidden rounded-lg bg-gray-100">
                 {post.cover?.url && (
                   <Image
-                    src={post.cover.url}
+                    src={getStrapiMedia(post.cover.url)}
                     alt={post.cover.alternativeText || post.title}
                     fill
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
