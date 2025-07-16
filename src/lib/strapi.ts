@@ -123,6 +123,8 @@ export function getStrapiMedia(url: string | null): string {
     return url || "";
   } else {
     if (url && url.includes("/_next/image?url=")) {
+      console.log("url From getStrapiMedia in production", url);
+      console.log("STRAPI_API_URL", STRAPI_API_URL);
       let cleanUrl = url?.replace("/_next/image?url=", "");
       cleanUrl = decodeURIComponent(cleanUrl);
       return `${STRAPI_API_URL}/${cleanUrl}`;
