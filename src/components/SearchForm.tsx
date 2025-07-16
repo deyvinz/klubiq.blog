@@ -43,7 +43,7 @@ export default function SearchForm() {
         </div>
         <button
           type="submit"
-          className="px-6 py-3 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+          className="px-6 py-3 bg-primary text-black rounded-lg hover:bg-primary/90 transition-colors"
         >
           Search
         </button>

@@ -93,7 +93,7 @@ export function ContactForm() {
             required
             value={formData.name}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+            className="mt-1 px-2 py-1 block w-full h-10 rounded-md border border-black-600 focus:border-primary focus:ring-primary sm:text-sm"
           />
         </div>
 
@@ -111,7 +111,7 @@ export function ContactForm() {
             required
             value={formData.email}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+            className="mt-1 px-2 py-1 block w-full h-10 rounded-md border border-black-600 focus:border-primary focus:ring-primary sm:text-sm"
           />
         </div>
 
@@ -129,7 +129,7 @@ export function ContactForm() {
             required
             value={formData.subject}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+            className="mt-1 px-2 py-1 block w-full h-10 rounded-md border border-black-600 focus:border-primary focus:ring-primary sm:text-sm"
           />
         </div>
 
@@ -147,7 +147,7 @@ export function ContactForm() {
             required
             value={formData.message}
             onChange={handleChange}
-            className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary focus:ring-primary sm:text-sm"
+            className="mt-1 px-2 py-1 block w-full rounded-md border border-black-600 focus:border-primary focus:ring-primary sm:text-sm"
           />
         </div>
       </div>
@@ -156,7 +156,7 @@ export function ContactForm() {
         <button
           type="submit"
           disabled={isSubmitting}
-          className="inline-flex justify-center rounded-md border border-transparent bg-primary px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-primary/80 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:opacity-50"
+          className="inline-flex justify-center rounded-md border border-black-600 bg-primary px-4 py-2 text-sm font-medium text-black"
         >
           {isSubmitting ? 'Sending...' : 'Send Message'}
         </button>

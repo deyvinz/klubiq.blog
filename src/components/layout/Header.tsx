@@ -28,7 +28,7 @@ export default function Header() {
               <Link 
                 key={link.href}
                 href={link.href} 
-                className="text-secondary hover:text-primary/80 transition-colors"
+                className="text-secondary"
               >
                 {link.label}
               </Link>

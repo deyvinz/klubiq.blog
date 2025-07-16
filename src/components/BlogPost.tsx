@@ -12,21 +12,18 @@ interface BlogPostProps {
 export default function BlogPost({ post }: BlogPostProps) {
   const STRAPI_API_URL =
     process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
-  const getImageUrl = (url: string) => {
-    // // Decode the URL
-    // const decodedUrl = decodeURIComponent(url)
-    // // Remove query parameters if they exist
-    // return decodedUrl.split('?')[0];
-    if (!url) {
-      return "";
-    }
-    // Decode the URL
-
-    const decodedUrl = decodeURIComponent(url.split("url=")[1]);
-    if (decodedUrl.startsWith("http")) {
-      return decodedUrl;
-    }
-    return `${STRAPI_API_URL}${decodedUrl}`;
+  const getImageUrl = (url?: string) => {
+    return url || "";
+    // if (!url) {
+    //   return "/images/blog-placeholder.jpg";
+    // }
+    // const decodedUrl = decodeURIComponent(url);
+    // if (decodedUrl.startsWith("http://") || decodedUrl.startsWith("https://")) {
+    //   return decodedUrl.split("?")[0];
+    // }
+    // // Remove leading slash if present to avoid double slashes
+    // const cleanPath = decodedUrl.startsWith("/") ? decodedUrl.slice(1) : decodedUrl;
+    // return `${STRAPI_API_URL}/${cleanPath.split("?")[0]}`;
   };
 
   return (
@@ -34,8 +31,8 @@ export default function BlogPost({ post }: BlogPostProps) {
       {post.cover && (
         <div className="relative aspect-video mb-12 rounded-lg overflow-hidden">
           <Image
-            src={getImageUrl(post.cover.url)}
-            alt={post.cover.alternativeText || post.title}
+            src={getImageUrl(post.cover?.url)}
+            alt={post.cover?.alternativeText || post.title}
             fill
             className="object-cover"
             priority
@@ -54,16 +51,17 @@ export default function BlogPost({ post }: BlogPostProps) {
                 <div className="relative w-8 h-8 rounded-full overflow-hidden">
                   <Image
                     src={getImageUrl(
-                      post.author.data.attributes.avatar.data.attributes.url
+                      post.author?.data?.attributes?.avatar?.data?.attributes
+                        ?.url
                     )}
-                    alt={post.author.data.attributes.name}
+                    alt={post.author?.data?.attributes?.name}
                     fill
                     className="object-cover"
                   />
                 </div>
               )}
               <span className="font-medium">
-                {post.author.data.attributes.name}
+                {post.author?.data?.attributes?.name}
               </span>
             </div>
           )}
