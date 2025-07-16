@@ -13,17 +13,20 @@ export default function BlogPost({ post }: BlogPostProps) {
   const STRAPI_API_URL =
     process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
   const getImageUrl = (url?: string) => {
-    return url || "";
-    // if (!url) {
-    //   return "/images/blog-placeholder.jpg";
-    // }
-    // const decodedUrl = decodeURIComponent(url);
-    // if (decodedUrl.startsWith("http://") || decodedUrl.startsWith("https://")) {
-    //   return decodedUrl.split("?")[0];
-    // }
-    // // Remove leading slash if present to avoid double slashes
-    // const cleanPath = decodedUrl.startsWith("/") ? decodedUrl.slice(1) : decodedUrl;
-    // return `${STRAPI_API_URL}/${cleanPath.split("?")[0]}`;
+    const env = process.env.NODE_ENV;
+    if (env !== "production") {
+      console.log("url From getImageUrl", url);
+      return url || "";
+    } else {
+      if (url && url.includes("/_next/image?url=")) {
+        let cleanUrl = url
+          ?.replace("/_next/image?url=", "")
+          .replace("https://blog.klubiq.com", "");
+        cleanUrl = decodeURIComponent(cleanUrl);
+        return `${STRAPI_API_URL}/${cleanUrl}`;
+      }
+      return `${STRAPI_API_URL}/${url}`;
+    }
   };
 
   return (

@@ -117,16 +117,18 @@ export async function fetchStrapiData<T>(
 
 // Helper function to get image URL from Strapi
 export function getStrapiMedia(url: string | null): string {
-  return url || "";
-  // if (!url) {
-  //   return "";
-  // }
-  // // Decode the URL
-  // const decodedUrl = decodeURIComponent(url.split("url=")[1]);
-  // if (decodedUrl.startsWith("http")) {
-  //   return decodedUrl;
-  // }
-  // return `${STRAPI_API_URL}${decodedUrl}`;
+  const env = process.env.NODE_ENV;
+  if (env !== "production") {
+    console.log("url From getStrapiMedia", url);
+    return url || "";
+  } else {
+    if (url && url.includes("/_next/image?url=")) {
+      let cleanUrl = url?.replace("/_next/image?url=", "");
+      cleanUrl = decodeURIComponent(cleanUrl);
+      return `${STRAPI_API_URL}/${cleanUrl}`;
+    }
+    return `${STRAPI_API_URL}/${url}`;
+  }
 }
 
 // Helper function to format Strapi date
