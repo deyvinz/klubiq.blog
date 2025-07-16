@@ -117,20 +117,18 @@ export async function fetchStrapiData<T>(
 
 // Helper function to get image URL from Strapi
 export function getStrapiMedia(url: string | null): string {
-  const env = process.env.NODE_ENV;
-  if (env !== "production") {
-    console.log("url From getStrapiMedia", url);
-    return url || "";
-  } else {
-    if (url && url.includes("/_next/image?url=")) {
-      console.log("url From getStrapiMedia in production", url);
-      console.log("STRAPI_API_URL", STRAPI_API_URL);
-      let cleanUrl = url?.replace("/_next/image?url=", "");
-      cleanUrl = decodeURIComponent(cleanUrl);
-      return `${STRAPI_API_URL}/${cleanUrl}`;
-    }
-    return `${STRAPI_API_URL}/${url}`;
+  const STRAPI_API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || "https://blog.api.klubiq.com";
+  if (!url) return "";
+
+  // Remove any accidental double slashes except after 'https://'
+  const normalizedUrl = url.replace(/([^:]\/)\/+/, "$1");
+
+  if (normalizedUrl.startsWith("http://") || normalizedUrl.startsWith("https://")) {
+    return normalizedUrl;
   }
+  // Remove leading slash from url if present
+  const cleanPath = normalizedUrl.startsWith("/") ? normalizedUrl.slice(1) : normalizedUrl;
+  return `${STRAPI_API_URL}/${cleanPath}`;
 }
 
 // Helper function to format Strapi date

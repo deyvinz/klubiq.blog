@@ -28,7 +28,7 @@ export default function Header() {
               <Link 
                 key={link.href}
                 href={link.href} 
-                className="text-secondary"
+                className="text-secondary hover:border-b-2 hover:border-primary"
               >
                 {link.label}
               </Link>
@@ -74,7 +74,7 @@ export default function Header() {
               <Link
                 key={link.href}
                 href={link.href}
-                className="block py-2 text-secondary hover:text-primary/80 transition-colors"
+                className="block py-2 text-secondary hover:border-b-2 hover:border-primary"
                 onClick={() => setIsMobileMenuOpen(false)}
               >
                 {link.label}

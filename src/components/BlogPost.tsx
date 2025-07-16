@@ -13,20 +13,18 @@ export default function BlogPost({ post }: BlogPostProps) {
   const STRAPI_API_URL =
     process.env.NEXT_PUBLIC_STRAPI_API_URL || "http://localhost:1337";
   const getImageUrl = (url?: string) => {
-    const env = process.env.NODE_ENV;
-    if (env !== "production") {
-      console.log("url From getImageUrl", url);
-      return url || "";
-    } else {
-      if (url && url.includes("/_next/image?url=")) {
-        let cleanUrl = url
-          ?.replace("/_next/image?url=", "")
-          .replace("https://blog.klubiq.com", "");
-        cleanUrl = decodeURIComponent(cleanUrl);
-        return `${STRAPI_API_URL}/${cleanUrl}`;
-      }
-      return `${STRAPI_API_URL}/${url}`;
+    const STRAPI_API_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || "https://blog.api.klubiq.com";
+    if (!url) {
+      return "/images/blog-placeholder.jpg";
     }
+    // Remove any accidental double slashes except after 'https://'
+    const normalizedUrl = url.replace(/([^:]\/)\/+/, "$1");
+    if (normalizedUrl.startsWith("http://") || normalizedUrl.startsWith("https://")) {
+      return normalizedUrl;
+    }
+    // Remove leading slash from url if present
+    const cleanPath = normalizedUrl.startsWith("/") ? normalizedUrl.slice(1) : normalizedUrl;
+    return `${STRAPI_API_URL}/${cleanPath}`;
   };
 
   return (

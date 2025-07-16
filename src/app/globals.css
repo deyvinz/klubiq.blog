@@ -40,7 +40,7 @@
   }
 
   a {
-    @apply text-primary hover:border-b-2 hover:border-primary transition-colors duration-200;
+    @apply text-primary  transition-colors duration-200;
   }
 }
 
